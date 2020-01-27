@@ -12,13 +12,18 @@
                         <span class="card-title">{{title}}</span>
                         <p class="price">{{price}}</p>
                     </div>
-                    <div class="card-action">
-                        <a href="/courses/{{id}}">Открыть курс</a>
+                    <div class="card-action actions">
+                        <a href="/courses/{{id}}" target="_blank">Open course</a>
+                        <a href="/courses/{{id}}/edit?allow=true" target="">Edit course</a>
+                        <form action="/card/add" method="post">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button class="btn btn-primary" type="submit">Buy</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     {{/each}}
 {{else}}
-    <p>Курсов пока нет</p>
+    <p>We dont have courses</p>
 {{/if}}
