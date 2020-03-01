@@ -46,3 +46,5 @@ if (cardElem) {
 
     })
 }
+
+M.Tabs.init(document.querySelectorAll(".tabs"));

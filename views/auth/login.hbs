@@ -1,0 +1,53 @@
+<div class="auth">
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a class="active" href="#login">Sign in</a></li>
+                <li class="tab col s6"><a href="#register">Sign up</a></li>
+            </ul>
+        </div>
+        <div id="login" class="col s6 offset-s3">
+            <h1>Enter to the shop</h1>
+            <form action="/add" method="POST">
+                <div class="input-field">
+                    <input id="email" name="email" type="email" class="validate" required/>
+                    <label for="email">Email</label>
+                    <span class="helper-text" data-error="Write email"></span>
+                </div>
+
+                <div class="input-field">
+                    <input id="password" name="password" type="password" class="validate" required>
+                    <label for="password">Write password</label>
+                    <span class="helper-text" data-error="Wrote password"></span>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Sign in</button>
+            </form>
+        </div>
+
+        <div id="register" class="col s6 offset-s3">
+            <h1>Register in the shop</h1>
+            <form action="/add" method="POST">
+                <div class="input-field">
+                    <input id="email_reg" name="email_reg" type="email" class="validate" required/>
+                    <label for="email_reg">Email</label>
+                    <span class="helper-text" data-error="Write email"></span>
+                </div>
+
+                <div class="input-field">
+                    <input id="password_reg" name="password_reg" type="password" class="validate" required>
+                    <label for="password_reg">Write password</label>
+                    <span class="helper-text" data-error="Write password"></span>
+                </div>
+
+                <div class="input-field">
+                    <input id="password_confirm" name="password_confirm" type="password" class="validate" required>
+                    <label for="password_confirm">Confirm password</label>
+                    <span class="helper-text" data-error="Write password"></span>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Sign up</button>
+            </form>
+        </div>
+    </div>
+</div>
