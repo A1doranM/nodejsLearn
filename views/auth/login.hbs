@@ -8,7 +8,7 @@
         </div>
         <div id="login" class="col s6 offset-s3">
             <h1>Enter to the shop</h1>
-            <form action="/add" method="POST">
+            <form action="/auth/login" method="POST">
                 <div class="input-field">
                     <input id="email" name="email" type="email" class="validate" required/>
                     <label for="email">Email</label>
@@ -21,30 +21,40 @@
                     <span class="helper-text" data-error="Wrote password"></span>
                 </div>
 
+                <input type="hidden" name="_csrf" value="{{csrf}}">
+
                 <button class="btn btn-primary" type="submit">Sign in</button>
             </form>
         </div>
 
         <div id="register" class="col s6 offset-s3">
             <h1>Register in the shop</h1>
-            <form action="/add" method="POST">
+            <form action="/auth/register" method="POST">
                 <div class="input-field">
-                    <input id="email_reg" name="email_reg" type="email" class="validate" required/>
-                    <label for="email_reg">Email</label>
+                    <input id="remail" name="email" type="email" class="validate" required/>
+                    <label for="remail">Email</label>
                     <span class="helper-text" data-error="Write email"></span>
                 </div>
 
                 <div class="input-field">
-                    <input id="password_reg" name="password_reg" type="password" class="validate" required>
-                    <label for="password_reg">Write password</label>
+                    <input id="rpassword" name="password" type="password" class="validate" required>
+                    <label for="rpassword">Write password</label>
                     <span class="helper-text" data-error="Write password"></span>
                 </div>
 
                 <div class="input-field">
-                    <input id="password_confirm" name="password_confirm" type="password" class="validate" required>
-                    <label for="password_confirm">Confirm password</label>
+                    <input id="confirm" name="confirm" type="password" class="validate" required>
+                    <label for="confirm">Confirm password</label>
                     <span class="helper-text" data-error="Write password"></span>
                 </div>
+
+                <div class="input-field">
+                    <input id="name" name="name" type="text" class="validate" required>
+                    <label for="name">Write name</label>
+                    <span class="helper-text" data-error="Write name"></span>
+                </div>
+
+                <input type="hidden" name="_csrf" value="{{csrf}}">
 
                 <button class="btn btn-primary" type="submit">Sign up</button>
             </form>

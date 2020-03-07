@@ -21,7 +21,10 @@ if (cardElem) {
             const id = event.target.dataset.id;
 
             fetch("/cart/remove/" + id, {
-                method: "delete"
+                method: "delete",
+                headers: {
+                    "X-XSRF-TOKEN": event.target.dataset.csrf
+                }
             }).then(res => res.json())
                 .then(card => {
                     if (card.courses.length) {
