@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const keys = require("./key");
 const path = require("path");
 const csrf = require("csurf");
 const flash = require("connect-flash");
@@ -20,12 +21,13 @@ const dataBaseURL = "mongodb+srv://Aldoran:1q2w3e3e2w1q4r@cluster0-w7nfz.mongodb
 
 const hbs = exphbs.create({
     defaultLayout: "main",
-    extname: "hbs"
+    extname: "hbs",
+    helpers: require("./utils/hbs-helpers"),
 });
 
 const store = new MongoStore({
     collection: "sessions",
-    uri: dataBaseURL,
+    uri: keys.dataBaseURL,
 });
 
 app.engine("hbs", hbs.engine);
@@ -35,7 +37,7 @@ app.set("views", "views");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
-    secret: "secret key",
+    secret: keys.secret,
     resave: false,
     saveUninitialized: false,
     store: store,

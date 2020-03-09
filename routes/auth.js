@@ -1,5 +1,6 @@
 const {Router} = require("express");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 const router = Router();
 const User = require("../models/user");
 
@@ -68,6 +69,103 @@ router.post("/register", async (req, res) => {
         console.log(e);
     }
 
+});
+
+router.get("/reset", (req, res) => {
+   res.render(
+       "auth/reset",
+       {
+           title: "Forgot password",
+           error: req.flash("error"),
+       }
+   )
+});
+
+router.post("/reset", (req, res) => {
+    try{
+        crypto.randomBytes(32, async (err, buffer) => {
+            if(!err){
+                const token = buffer.toString("hex");
+                const candidate = await User.findOne({
+                    email: req.body.email
+                });
+                if(candidate) {
+                    candidate.resetToken = token;
+                    candidate.resetTokenExp = Date.now() + 3600 * 1000;
+                    await candidate.save();
+                    //TODO: send email
+                    res.redirect("auth/login")
+                } else {
+                    req.flash("error", "Email does not exist!");
+                    res.redirect("auth/reset");
+                }
+            } else {
+                throw err;
+            }
+        });
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+router.get("/password/:token", async (req, res) => {
+    try {
+        if (!req.params.token) {
+            return res.redirect("auth/login");
+        }
+
+        const user = await User.findOne({
+            resetToken: req.params.token,
+            resetTokenExp: {$gt: Date.now()}
+        });
+
+        if(!user){
+            return res.redirect("auth/login");
+        } else {
+            res.render(
+                "auth/password",
+                {
+                    title: "Change password",
+                    error: req.flash("error"),
+                    userId: user._id.toString(),
+                    token: req.params.token,
+                }
+            )
+        }
+
+        res.render(
+            "auth/reset",
+            {
+                title: "Forgot password",
+                error: req.flash("error"),
+            }
+        )
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+router.post("/password", async (req, res) => {
+   try{
+       const user = await User.findOne({
+          _id: req.body.userId,
+          resetToken: req.body.token,
+          resetTokenExp: {$gt: Date.now()}
+       });
+
+       if(user) {
+           user.password = await bcrypt.hash(req.body.password, 10);
+           user.resetToken = undefined;
+           user.resetTokenExp = undefined;
+           await user.save();
+           res.redirect("auth/login");
+       } else {
+           res.redirect("auth/login");
+           req.flash("error", "Token expired!");
+       }
+   } catch (e) {
+       console.log(e)
+   }
 });
 
 module.exports = router;
