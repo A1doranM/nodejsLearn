@@ -12,6 +12,7 @@ const userSchema = new Schema({
     name: {
         type: String,
     },
+    avatarUrl: String,
     resetToken: String,
     resetTokenExp: Date,
     cart: {

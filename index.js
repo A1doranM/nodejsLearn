@@ -13,8 +13,11 @@ const cartRoutes = require("./routes/cart");
 const coursesRoutes = require("./routes/courses");
 const ordersRoutes = require("./routes/orders");
 const authRoutes = require("./routes/auth");
+const profileRoutes = require("./routes/profile");
 const varMiddleware = require("./middleware/variables");
 const userMiddleware = require("./middleware/user");
+const errorHandler = require("./middleware/error");
+const fileMeddleware = require("./middleware/file");
 
 const app = express();
 const dataBaseURL = "mongodb+srv://Aldoran:1q2w3e3e2w1q4r@cluster0-w7nfz.mongodb.net/shop";
@@ -35,6 +38,7 @@ app.set("view engine", "hbs");
 app.set("views", "views");
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
     secret: keys.secret,
@@ -42,6 +46,8 @@ app.use(session({
     saveUninitialized: false,
     store: store,
 }));
+
+app.use(fileMeddleware.single("avatar"));
 app.use(csrf());
 app.use(flash());
 app.use(varMiddleware);
@@ -53,6 +59,9 @@ app.use("/courses", coursesRoutes);
 app.use("/cart", cartRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/auth", authRoutes);
+app.use("/profile", profileRoutes);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 

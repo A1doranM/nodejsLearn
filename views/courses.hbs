@@ -15,7 +15,7 @@
                     <div class="card-action actions">
                         <a href="/courses/{{id}}" target="_blank">Open course</a>
                         {{#if @root.isAuth}}
-                            {{#if userId._id @root.userId}}
+                            {{#if @root.userId}}
                                 <a href="/courses/{{id}}/edit?allow=true" target="">Edit course</a>
                             {{/if}}
                             <form action="/cart/add" method="post">
