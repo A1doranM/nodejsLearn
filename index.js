@@ -20,7 +20,7 @@ const errorHandler = require("./middleware/error");
 const fileMeddleware = require("./middleware/file");
 
 const app = express();
-const dataBaseURL = "mongodb+srv://Aldoran:1q2w3e3e2w1q4r@cluster0-w7nfz.mongodb.net/shop";
+const dataBaseURL = "mongodb+srv://Aldoran:1q2w3e3e2w1q4r@cluster0.28fvp.mongodb.net/shop";
 
 const hbs = exphbs.create({
     defaultLayout: "main",
